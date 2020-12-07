@@ -1,7 +1,44 @@
+:root {
+  --highlight: red;
+}
+
 * {
   font-family: 'Oxygen', sans-serif;
 }
 
 h1 {
   font-size: 5rem;
+}
+
+.start-modal h2,
+.start-modal button {
+  margin-left: 20vw;
+}
+
+.start-modal-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  background-color: rebeccapurple;
+  width: 60vw;
+  margin-left: 20vw;
+}
+
+.start-modal-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: var(--highlight) 1px solid;
+  border-radius: 2rem;
+  padding: 4rem;
+  cursor: pointer;
+}
+
+.selected {
+  border: var(--highlight) 4px solid;
+  color: var(--highlight);
+}
+
+.hide {
+  display: none;
 }
