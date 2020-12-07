@@ -10,8 +10,9 @@
 </head>
 <body style="background-color: aqua;">
   <h1>Tic Tac Toe</h1>
-
   <p class="player-message-block"></p>
+
+  <!-- Start modal -->
   <div class="start-modal">
     
     <h2>Select player mode</h2>
@@ -40,15 +41,42 @@
 
   </div>
 
-  <div class="modal-submit-names">
+  <!-- Capture name modal -->
+  <div class="modal-submit-names hide">
+
     <form>
       <label for="Player-1">Player 1:</label><br>
-      <input type="text" id="Player-1" name="Player-1"><br>
+      <input class="player-one" type="text" id="Player-1" name="Player-1"><br>
       <label for="Player-2">Player 2:</label><br>
-      <input type="text" id="Player-2" name="Player-2"><br>
-      <input type="submit" value="Submit">
+      <input class="player-two" type="text" id="Player-2" name="Player-2"><br>
     </form>
+
+    <button class="modal-submit-names-button">Play</button>
+
   </div>
+
+  <!-- Game layout -->
+  <section class="game-section hide">
+
+    <h3>Some content</h3>
+
+    <div class="game-container">
+
+      <div data-cell-index="0" class="cell"></div>
+      <div data-cell-index="1" class="cell"></div>
+      <div data-cell-index="2" class="cell"></div>
+      <div data-cell-index="3" class="cell"></div>
+      <div data-cell-index="4" class="cell"></div>
+      <div data-cell-index="5" class="cell"></div>
+      <div data-cell-index="6" class="cell"></div>
+      <div data-cell-index="7" class="cell"></div>
+      <div data-cell-index="8" class="cell"></div>
+
+    </div>
+
+    <button>Restart game</button>
+    
+  </section>
 
   <script src="app.js"></script>
 </body>
