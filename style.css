@@ -1,13 +1,20 @@
 :root {
   --highlight: red;
+  --warning-background: #F2DEDE;
+  --warning-text: #A94442;
 }
 
 * {
   font-family: 'Oxygen', sans-serif;
 }
 
+body {
+  margin: 0;
+}
+
 h1 {
   font-size: 5rem;
+  text-align: center;
 }
 
 .start-modal h2,
@@ -43,6 +50,25 @@ h1 {
   display: none;
 }
 
+/* Player message */
+.player-message-block {
+  position: absolute;
+  text-align: center;
+  bottom: 0;
+  color: var(--warning-text);
+  background-color: var(--warning-background);
+  padding: 1rem;
+  border-radius: 0.5rem;
+  width: 50vw;
+  margin-left: 25vw;
+  transform: translateY(150%);
+  transition: all 0.25s;
+}
+
+.active {
+  transform: translateY(-100%);
+}
+
 /* Game styling */
 .game-container {
   display: grid;
@@ -51,12 +77,11 @@ h1 {
   margin: 50px auto;
 }
 .cell {
-  font-family: "Permanent Marker", cursive;
   width: 100px;
   height: 100px;
   box-shadow: 0 0 0 1px #333333;
   border: 1px solid #333333;
   cursor: pointer;
-line-height: 100px;
+  line-height: 100px;
   font-size: 60px;
 }

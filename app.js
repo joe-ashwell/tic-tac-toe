@@ -25,10 +25,13 @@ function playerModeChoice() {
 
   this.classList.toggle('selected');
   playerMessageBlock.innerHTML = CLEAR_MESSAGE;
+  playerMessageBlock.classList.remove('active');
 
   if (this === oneGameModeChoice) {
+    twoGameModeChoice.classList.remove('selected')
     return gameModeChoice = 1;
   } else if (this === twoGameModeChoice) {
+    oneGameModeChoice.classList.remove('selected')
     return gameModeChoice = 2;
   }
 
@@ -38,6 +41,7 @@ function playerModeChoice() {
 function openPlayerNamesModal() {
 
   if (gameModeChoice !== 1 && gameModeChoice !== 2) {
+    playerMessageBlock.classList.add('active');
     playerMessageBlock.innerHTML = `Please select a player mode.`;
   } else {
     startModal.classList.add('hide');
@@ -57,12 +61,15 @@ function submitPlayerNames() {
 
   if (gameModeChoice === 1 && !playerOneName) {
     playerMessageBlock.innerHTML = `Please enter a name.`;
+    playerMessageBlock.classList.add('active');
   } else if (gameModeChoice === 2 && !playerTwoName || !playerOneName) {
     playerMessageBlock.innerHTML = `Please enter a name.`;
+    playerMessageBlock.classList.add('active');
   } else {
     submitNamesModal.classList.add('hide');
     gameSection.classList.remove('hide');
     playerMessageBlock.innerHTML = CLEAR_MESSAGE;
+    playerMessageBlock.classList.remove('active');
   }
 
   return playerOneName, playerTwoName;
