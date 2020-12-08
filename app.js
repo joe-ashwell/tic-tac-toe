@@ -17,6 +17,10 @@ let playerTwoName;
 
 // Game section
 const gameSection = document.querySelector('.game-section')
+const gameCells = document.querySelectorAll('.cell');
+let playCount = 0;
+const PLAYER_ONE_CROSS = `<i class="fa fa-times" aria-hidden="true"></i>`;
+const PLAYER_TWO_NAUGHTS = `<i class="fa fa-circle-o" aria-hidden="true"></i>`;
 
 const CLEAR_MESSAGE = ``;
 
@@ -76,6 +80,19 @@ function submitPlayerNames() {
 
 }
 
+function playGame() {
+
+  if (playCount % 2 === 0) {
+    this.innerHTML = PLAYER_ONE_CROSS;
+  } else {
+    this.innerHTML = PLAYER_TWO_NAUGHTS;
+  }
+
+  playCount++;
+
+}
+
+gameCells.forEach(cell => {cell.addEventListener('click', playGame)});
 submitNamesModalButton.addEventListener('click', submitPlayerNames);
 modalButton.addEventListener('click', openPlayerNamesModal);
 twoGameModeChoice.addEventListener('click', playerModeChoice);
