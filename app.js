@@ -33,6 +33,10 @@ const WINNING_CONDITIONS = [
   [0, 4, 8],
   [2, 4, 6]
 ];
+let playerOneWins = false;
+let playerTwoWins = false;
+
+let resetButton = document.querySelector('button.reset-button')
 
 const CLEAR_MESSAGE = ``;
 
@@ -96,7 +100,10 @@ function playGame() {
 
   // First checks to see if a player has been by comparing if the cell is blank or not.
   // Updates the playCount only when a successful click has been made
-  if (!this.innerHTML) {
+  if (!this.innerHTML &&
+      gameModeChoice === 2
+    
+    ) {
 
     // Then ensures player one uses the cross, and player 2 uses the naughts by checking the modulus of clicks
     if (playCount % 2 === 0) {
@@ -111,16 +118,56 @@ function playGame() {
       scoresOnTheDoors();
     }
 
+  } else if (!this.innerHTML &&
+             gameModeChoice === 1
+  
+  ) {
+    this.innerHTML = PLAYER_ONE_CROSS;
+    playerOneGameLog.push(parseInt(this.dataset.cellIndex));
+    playCount++;
+    scoresOnTheDoors();
+    computerPlayerTwo();
+
+    // if (playCount % 2 === 0) {
+    //   this.innerHTML = PLAYER_ONE_CROSS;
+    //   playerOneGameLog.push(parseInt(this.dataset.cellIndex));
+    //   playCount++;
+    //   scoresOnTheDoors();
+    // } else {
+    //   computerPlayerTwo();
+    //   playCount++;
+    //   scoresOnTheDoors();
+    // }
+
   }
+  // computerPlayerTwo();
+
+}
+
+function computerPlayerTwo() {
+
+  let computerChoice = getRandomNumber();
+
+    if (
+      playerOneGameLog.length + playerTwoGameLog.length < 9 &&
+      playerOneGameLog.includes(computerChoice) || 
+      playerTwoGameLog.includes(computerChoice)
+      ) {
+      computerPlayerTwo();
+    } else {
+      gameCells[computerChoice].innerHTML = PLAYER_TWO_NAUGHTS;
+      playerTwoGameLog.push(parseInt(gameCells[computerChoice].dataset.cellIndex));
+      playCount++;
+      console.log(computerChoice);
+    }
+
+  scoresOnTheDoors();
 
 }
 
 function scoresOnTheDoors() {
 
   WINNING_CONDITIONS.forEach(condition => {
-
-    let playerOneWins = false;
-    let playerTwoWins = false;
 
     if (
       playerOneGameLog.includes(condition[0]) &&
@@ -130,9 +177,11 @@ function scoresOnTheDoors() {
 
     ) {
       console.log('Player one, won.')
-      return playerOneWins = true;
-
-    } else if (
+      playerOneWins = true;
+      console.log(`player one wins: ${playerOneWins}`);
+    } 
+    
+    else if (
       playerTwoGameLog.includes(condition[0]) &&
       playerTwoGameLog.includes(condition[1]) &&
       playerTwoGameLog.includes(condition[2]) &&
@@ -144,22 +193,15 @@ function scoresOnTheDoors() {
       console.log(`player two wins: ${playerTwoWins}`);
     }
     
-  })
-
-}
-
-function computerPlayerTwo() {
-
-  let computerChoice = getRandomNumber();
-
-  if (
-    playerOneGameLog.includes(computerChoice) || 
-    playerTwoGameLog.includes(computerChoice)
+    else if (
+      playerOneWins === false &&
+      playerTwoWins === false &&
+      playerOneGameLog.length + playerTwoGameLog.length === gameCells.length
     ) {
-    console.log("Already done");
-  } else {
-    console.log(computerChoice);
-  }
+      console.log(`it's a draw`);
+    }
+    
+  })
 
 }
 
@@ -169,6 +211,7 @@ function getRandomNumber() {
 
 }
 
+resetButton.addEventListener('click', computerPlayerTwo);
 gameCells.forEach(cell => {cell.addEventListener('click', playGame)});
 submitNamesModalButton.addEventListener('click', submitPlayerNames);
 modalButton.addEventListener('click', openPlayerNamesModal);
