@@ -19,8 +19,20 @@ let playerTwoName;
 const gameSection = document.querySelector('.game-section')
 const gameCells = document.querySelectorAll('.cell');
 let playCount = 0;
+let playerOneGameLog = [];
+let playerTwoGameLog = [];
 const PLAYER_ONE_CROSS = `<i class="fa fa-times" aria-hidden="true"></i>`;
 const PLAYER_TWO_NAUGHTS = `<i class="fa fa-circle-o" aria-hidden="true"></i>`;
+const WINNING_CONDITIONS = [
+  [0, 1, 2],
+  [3, 4, 5],
+  [6, 7, 8],
+  [0, 3, 6],
+  [1, 4, 7],
+  [2, 5, 8],
+  [0, 4, 8],
+  [2, 4, 6]
+];
 
 const CLEAR_MESSAGE = ``;
 
@@ -82,13 +94,78 @@ function submitPlayerNames() {
 
 function playGame() {
 
-  if (playCount % 2 === 0) {
-    this.innerHTML = PLAYER_ONE_CROSS;
-  } else {
-    this.innerHTML = PLAYER_TWO_NAUGHTS;
+  // First checks to see if a player has been by comparing if the cell is blank or not.
+  // Updates the playCount only when a successful click has been made
+  if (!this.innerHTML) {
+
+    // Then ensures player one uses the cross, and player 2 uses the naughts by checking the modulus of clicks
+    if (playCount % 2 === 0) {
+      this.innerHTML = PLAYER_ONE_CROSS;
+      playerOneGameLog.push(parseInt(this.dataset.cellIndex));
+      playCount++;
+      scoresOnTheDoors();
+    } else {
+      this.innerHTML = PLAYER_TWO_NAUGHTS;
+      playerTwoGameLog.push(parseInt(this.dataset.cellIndex));
+      playCount++;
+      scoresOnTheDoors();
+    }
+
   }
 
-  playCount++;
+}
+
+function scoresOnTheDoors() {
+
+  WINNING_CONDITIONS.forEach(condition => {
+
+    let playerOneWins = false;
+    let playerTwoWins = false;
+
+    if (
+      playerOneGameLog.includes(condition[0]) &&
+      playerOneGameLog.includes(condition[1]) &&
+      playerOneGameLog.includes(condition[2]) &&
+      playerTwoWins === false
+
+    ) {
+      console.log('Player one, won.')
+      return playerOneWins = true;
+
+    } else if (
+      playerTwoGameLog.includes(condition[0]) &&
+      playerTwoGameLog.includes(condition[1]) &&
+      playerTwoGameLog.includes(condition[2]) &&
+      playerOneWins === false
+
+    ) {
+      console.log('Player two, won.')
+      playerTwoWins = true;
+      console.log(`player two wins: ${playerTwoWins}`);
+    }
+    
+  })
+
+}
+
+function computerPlayerTwo() {
+
+  let computerChoice = getRandomNumber();
+
+  if (
+    playerOneGameLog.includes(computerChoice) || 
+    playerTwoGameLog.includes(computerChoice)
+    ) {
+    console.log("Already done");
+  } else {
+    console.log(computerChoice);
+  }
+
+}
+
+function getRandomNumber() {
+
+  return Math.floor(Math.random() * 9);
 
 }
 
