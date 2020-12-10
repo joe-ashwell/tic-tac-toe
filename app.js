@@ -263,9 +263,9 @@ function playAgain() {
 function resetSettings() {
 
   gameModeChoice = 0;
-  playerOneName = '';
+  playerOneNameInput.value = ``;
   playerOneScore = 0;
-  playerTwoName = '';
+  playerTwoNameInput.value = ``;
   playerTwoScore = 0;
   playerTwoNameInput.disabled = false;
 
