@@ -1,5 +1,6 @@
 //General
 const progressBar = document.querySelector('div.progress-bar');
+const CLEAR_MESSAGE = ``;
 
 // Start Mmdal
 const oneGameModeChoice = document.querySelector('.one-player');
@@ -20,8 +21,8 @@ let playerTwoName;
 
 // Game section
 const gameSection = document.querySelector('.game-section')
-const ScoreSectionPlayer1 = document.querySelector('li.player-1');
-const ScoreSectionPlayer2 = document.querySelector('li.player-2');
+const scoreSectionPlayer1 = document.querySelector('li.player-1');
+const scoreSectionPlayer2 = document.querySelector('li.player-2');
 const gameCells = document.querySelectorAll('.cell');
 let playCount = 0;
 let playerOneGameLog = [];
@@ -43,13 +44,11 @@ let playerTwoWins = false;
 let gameOver = false;
 let playerOneScore = 0
 let playerTwoScore = 0;
-
 let playAgainButton = document.querySelector('button.play-again');
 let resetButton = document.querySelector('button.reset-button');
 
-const CLEAR_MESSAGE = ``;
 
-// Captures player game mode choice
+// Captures player game mode choice (one or two players)
 function playerModeChoice() {
 
   this.classList.toggle('selected');
@@ -180,12 +179,12 @@ function computerPlayerTwo() {
 
 function setPlayerScore() {
 
-  ScoreSectionPlayer1.innerHTML = `${playerOneName}: ${playerOneScore}`;
+  scoreSectionPlayer1.innerHTML = `${playerOneName}: ${playerOneScore}`;
 
   if (gameModeChoice === 2) {
-    ScoreSectionPlayer2.innerHTML = `${playerTwoName}: ${playerTwoScore}`;
+    scoreSectionPlayer2.innerHTML = `${playerTwoName}: ${playerTwoScore}`;
   } else {
-    ScoreSectionPlayer2.innerHTML = `Computer: ${playerTwoScore}`;
+    scoreSectionPlayer2.innerHTML = `Computer: ${playerTwoScore}`;
   }
 
 }
@@ -234,7 +233,9 @@ function scoresOnTheDoors() {
     }
 
     else {
+
       return;
+
     }
     
   })
@@ -263,9 +264,9 @@ function playAgain() {
 function resetSettings() {
 
   gameModeChoice = 0;
-  playerOneNameInput.value = ``;
+  playerOneNameInput.value = CLEAR_MESSAGE;
   playerOneScore = 0;
-  playerTwoNameInput.value = ``;
+  playerTwoNameInput.value = CLEAR_MESSAGE;
   playerTwoScore = 0;
   playerTwoNameInput.disabled = false;
 
@@ -278,7 +279,7 @@ function resetSettings() {
   // To remove selected game mode state 
   startModalItems.forEach(item => {
 
-    if( item.classList.contains('selected') === true ) {
+    if (item.classList.contains('selected') === true) {
       item.classList.remove('selected');
     }
 
