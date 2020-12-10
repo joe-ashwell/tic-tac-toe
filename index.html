@@ -8,8 +8,9 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="style.css">
 </head>
-<body style="background-color: aqua;">
+<body>
   <h1>Tic Tac Toe</h1>
+  <div class="progress-bar"></div>
   <p class="player-message-block"></p>
 
   <!-- Start modal -->
@@ -60,6 +61,11 @@
 
     <h3>Some content</h3>
 
+    <ul class="player-score">
+      <li class="player-1">test</li>
+      <li class="player-2">test</li>
+    </ul>
+
     <div class="game-container">
 
       <div data-cell-index="0" class="cell"></div>
@@ -74,7 +80,8 @@
 
     </div>
 
-    <button class="reset-button">Restart game</button>
+    <button class="play-again">Play again</button>
+    <button class="reset-button">Reset</button>
 
   </section>
 

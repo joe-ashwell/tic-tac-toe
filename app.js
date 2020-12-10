@@ -1,3 +1,6 @@
+//General
+const progressBar = document.querySelector('div.progress-bar');
+
 // Start Mmdal
 const oneGameModeChoice = document.querySelector('.one-player');
 const twoGameModeChoice = document.querySelector('.two-player');
@@ -17,6 +20,8 @@ let playerTwoName;
 
 // Game section
 const gameSection = document.querySelector('.game-section')
+const ScoreSectionPlayer1 = document.querySelector('li.player-1');
+const ScoreSectionPlayer2 = document.querySelector('li.player-2');
 const gameCells = document.querySelectorAll('.cell');
 let playCount = 0;
 let playerOneGameLog = [];
@@ -35,8 +40,12 @@ const WINNING_CONDITIONS = [
 ];
 let playerOneWins = false;
 let playerTwoWins = false;
+let gameOver = false;
+let playerOneScore = 0
+let playerTwoScore = 0;
 
-let resetButton = document.querySelector('button.reset-button')
+let playAgainButton = document.querySelector('button.play-again');
+let resetButton = document.querySelector('button.reset-button');
 
 const CLEAR_MESSAGE = ``;
 
@@ -66,10 +75,12 @@ function openPlayerNamesModal() {
   } else {
     startModal.classList.add('hide');
     submitNamesModal.classList.remove('hide')
+    progressBar.style.width = `66vw`;
     if (gameModeChoice === 1) {
       playerTwoNameInput.disabled = true;
     }
   }
+
 
 }
 
@@ -90,9 +101,10 @@ function submitPlayerNames() {
     gameSection.classList.remove('hide');
     playerMessageBlock.innerHTML = CLEAR_MESSAGE;
     playerMessageBlock.classList.remove('active');
+    progressBar.style.width = `100vw`;
   }
 
-  return playerOneName, playerTwoName;
+  setPlayerScore();
 
 }
 
@@ -101,7 +113,8 @@ function playGame() {
   // First checks to see if a player has been by comparing if the cell is blank or not.
   // Updates the playCount only when a successful click has been made
   if (!this.innerHTML &&
-      gameModeChoice === 2
+      gameModeChoice === 2 &&
+      gameOver === false
     
     ) {
 
@@ -111,36 +124,36 @@ function playGame() {
       playerOneGameLog.push(parseInt(this.dataset.cellIndex));
       playCount++;
       scoresOnTheDoors();
+      setPlayerScore();
     } else {
       this.innerHTML = PLAYER_TWO_NAUGHTS;
       playerTwoGameLog.push(parseInt(this.dataset.cellIndex));
       playCount++;
       scoresOnTheDoors();
+      setPlayerScore();
     }
 
-  } else if (!this.innerHTML &&
-             gameModeChoice === 1
+  } 
+  
+  else if (!this.innerHTML &&
+           gameModeChoice === 1 &&
+           gameOver === false
   
   ) {
     this.innerHTML = PLAYER_ONE_CROSS;
     playerOneGameLog.push(parseInt(this.dataset.cellIndex));
     playCount++;
     scoresOnTheDoors();
-    computerPlayerTwo();
+    setPlayerScore();
 
-    // if (playCount % 2 === 0) {
-    //   this.innerHTML = PLAYER_ONE_CROSS;
-    //   playerOneGameLog.push(parseInt(this.dataset.cellIndex));
-    //   playCount++;
-    //   scoresOnTheDoors();
-    // } else {
-    //   computerPlayerTwo();
-    //   playCount++;
-    //   scoresOnTheDoors();
-    // }
+    if (gameOver === false) {
+
+      // Delay the function call to make it appear a bit more realistic
+      setTimeout(computerPlayerTwo, 1000);
+
+    }
 
   }
-  // computerPlayerTwo();
 
 }
 
@@ -165,6 +178,18 @@ function computerPlayerTwo() {
 
 }
 
+function setPlayerScore() {
+
+  ScoreSectionPlayer1.innerHTML = `${playerOneName}: ${playerOneScore}`;
+
+  if (gameModeChoice === 2) {
+    ScoreSectionPlayer2.innerHTML = `${playerTwoName}: ${playerTwoScore}`;
+  } else {
+    ScoreSectionPlayer2.innerHTML = `Computer: ${playerTwoScore}`;
+  }
+
+}
+
 function scoresOnTheDoors() {
 
   WINNING_CONDITIONS.forEach(condition => {
@@ -178,7 +203,10 @@ function scoresOnTheDoors() {
     ) {
       console.log('Player one, won.')
       playerOneWins = true;
+      playerOneScore += 1;
+      setPlayerScore();
       console.log(`player one wins: ${playerOneWins}`);
+      gameOver = true;
     } 
     
     else if (
@@ -190,7 +218,10 @@ function scoresOnTheDoors() {
     ) {
       console.log('Player two, won.')
       playerTwoWins = true;
+      playerTwoScore += 1;
+      setPlayerScore();
       console.log(`player two wins: ${playerTwoWins}`);
+      gameOver = true;
     }
     
     else if (
@@ -199,6 +230,11 @@ function scoresOnTheDoors() {
       playerOneGameLog.length + playerTwoGameLog.length === gameCells.length
     ) {
       console.log(`it's a draw`);
+      gameOver = true;
+    }
+
+    else {
+      return;
     }
     
   })
@@ -211,7 +247,47 @@ function getRandomNumber() {
 
 }
 
-resetButton.addEventListener('click', computerPlayerTwo);
+function playAgain() {
+
+  playerOneGameLog = [];
+  playerTwoGameLog = [];
+  playCount = 0;
+  gameOver = false;
+  playerOneWins = false;
+  playerTwoWins = false;
+
+  gameCells.forEach(cell => cell.innerHTML = CLEAR_MESSAGE);
+
+}
+
+function resetSettings() {
+
+  gameModeChoice = 0;
+  playerOneName = '';
+  playerOneScore = 0;
+  playerTwoName = '';
+  playerTwoScore = 0;
+  playerTwoNameInput.disabled = false;
+
+  playAgain();
+
+  startModal.classList.remove('hide');
+  gameSection.classList.add('hide');
+  progressBar.style.width = `33vw`;
+
+  // To remove selected game mode state 
+  startModalItems.forEach(item => {
+
+    if( item.classList.contains('selected') === true ) {
+      item.classList.remove('selected');
+    }
+
+  })
+
+}
+
+playAgainButton.addEventListener('click', playAgain);
+resetButton.addEventListener('click', resetSettings);
 gameCells.forEach(cell => {cell.addEventListener('click', playGame)});
 submitNamesModalButton.addEventListener('click', submitPlayerNames);
 modalButton.addEventListener('click', openPlayerNamesModal);
