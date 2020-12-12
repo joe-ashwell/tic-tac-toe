@@ -170,7 +170,7 @@ function computerPlayerTwo() {
       playerTwoGameLog.includes(computerChoice)
       ) {
       computerPlayerTwo();
-      
+
     } else {
       gameCells[computerChoice].innerHTML = PLAYER_TWO_NAUGHTS;
       playerTwoGameLog.push(parseInt(gameCells[computerChoice].dataset.cellIndex));
@@ -184,15 +184,11 @@ function computerPlayerTwo() {
 
 function setPlayerScore() {
 
-if (gameModeChoice === 2) {
-    playerScoreSection.innerHTML = `
-    <p>${playerOneName}</p> <p>${playerOneScore} - ${playerTwoScore}</p> <p>${playerTwoName}</p>
-    `;
-  } else {
-    playerScoreSection.innerHTML = `
-    <p>${playerOneName}</p> <p>${playerOneScore} - ${playerTwoScore}</p> <p>Computer</p>
-    `;
-  }
+  playerScoreSection.innerHTML = `
+
+  <p>${playerOneName}</p> <p>${playerOneScore} - ${playerTwoScore}</p> <p>${playerTwoName || `Computer`}</p>
+  
+  `;
 
 }
 
