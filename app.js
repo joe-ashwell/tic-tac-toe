@@ -44,16 +44,18 @@ let playerTwoWins = false;
 let gameOver = false;
 let playerOneScore = 0
 let playerTwoScore = 0;
-let playAgainButton = document.querySelector('button.play-again');
-let resetButton = document.querySelector('button.reset-button');
+const playerScoreSection = document.querySelector('div.player-score-section');
+const playAgainButton = document.querySelector('button.play-again');
+const resetButton = document.querySelector('button.reset-button');
 
 
 // Captures player game mode choice (one or two players)
 function playerModeChoice() {
 
-  this.classList.toggle('selected');
+  this.classList.add('selected');
   playerMessageBlock.innerHTML = CLEAR_MESSAGE;
   playerMessageBlock.classList.remove('active');
+  progressBar.style.width = `33vw`;
 
   if (this === oneGameModeChoice) {
     twoGameModeChoice.classList.remove('selected')
@@ -92,9 +94,11 @@ function submitPlayerNames() {
   if (gameModeChoice === 1 && !playerOneName) {
     playerMessageBlock.innerHTML = `Please enter a name.`;
     playerMessageBlock.classList.add('active');
+
   } else if (gameModeChoice === 2 && !playerTwoName || !playerOneName) {
     playerMessageBlock.innerHTML = `Please enter a name.`;
     playerMessageBlock.classList.add('active');
+
   } else {
     submitNamesModal.classList.add('hide');
     gameSection.classList.remove('hide');
@@ -148,7 +152,7 @@ function playGame() {
     if (gameOver === false) {
 
       // Delay the function call to make it appear a bit more realistic
-      setTimeout(computerPlayerTwo, 1000);
+      setTimeout(computerPlayerTwo, 1500);
 
     }
 
@@ -166,6 +170,7 @@ function computerPlayerTwo() {
       playerTwoGameLog.includes(computerChoice)
       ) {
       computerPlayerTwo();
+      
     } else {
       gameCells[computerChoice].innerHTML = PLAYER_TWO_NAUGHTS;
       playerTwoGameLog.push(parseInt(gameCells[computerChoice].dataset.cellIndex));
@@ -179,12 +184,14 @@ function computerPlayerTwo() {
 
 function setPlayerScore() {
 
-  scoreSectionPlayer1.innerHTML = `${playerOneName}: ${playerOneScore}`;
-
-  if (gameModeChoice === 2) {
-    scoreSectionPlayer2.innerHTML = `${playerTwoName}: ${playerTwoScore}`;
+if (gameModeChoice === 2) {
+    playerScoreSection.innerHTML = `
+    <p>${playerOneName}</p> <p>${playerOneScore} - ${playerTwoScore}</p> <p>${playerTwoName}</p>
+    `;
   } else {
-    scoreSectionPlayer2.innerHTML = `Computer: ${playerTwoScore}`;
+    playerScoreSection.innerHTML = `
+    <p>${playerOneName}</p> <p>${playerOneScore} - ${playerTwoScore}</p> <p>Computer</p>
+    `;
   }
 
 }
@@ -274,7 +281,7 @@ function resetSettings() {
 
   startModal.classList.remove('hide');
   gameSection.classList.add('hide');
-  progressBar.style.width = `33vw`;
+  progressBar.style.width = `0`;
 
   // To remove selected game mode state 
   startModalItems.forEach(item => {
