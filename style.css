@@ -316,4 +316,8 @@ span.score-section {
     margin-bottom: 1rem;
   }
 
+  input {
+    background-color: #dee2e6;;
+  }
+
 }
