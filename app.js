@@ -14,6 +14,7 @@ let gameModeChoice;
 // Submit names modal
 const submitNamesModal = document.querySelector('.modal-submit-names');
 const submitNamesModalButton = document.querySelector('.modal-submit-names-button');
+const goBack = document.querySelector('.modal-submit-names-button-previous');
 const playerOneNameInput = document.querySelector('.player-one');
 const playerTwoNameInput = document.querySelector('.player-two');
 let playerOneName;
@@ -108,6 +109,13 @@ function submitPlayerNames() {
   }
 
   setPlayerScore();
+
+}
+
+function goBackToGameModeChoice() {
+
+  submitNamesModal.classList.add('hide');
+  resetSettings();
 
 }
 
@@ -290,6 +298,7 @@ function resetSettings() {
 
 }
 
+goBack.addEventListener('click', goBackToGameModeChoice);
 playAgainButton.addEventListener('click', playAgain);
 resetButton.addEventListener('click', resetSettings);
 gameCells.forEach(cell => {cell.addEventListener('click', playGame)});
