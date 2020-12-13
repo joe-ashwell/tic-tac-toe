@@ -2,6 +2,12 @@
   --warning-background: #F2DEDE;
   --warning-text: #A94442;
 
+  --winning-background: #DFF0D8;
+  --winning-text: #3C763D;
+
+  --draw-background: #D9EDF7;
+  --draw-text: #31708F;
+
   --colour-font-dark: #181818;
   --colour-font-light: #f8f8f8;
 
@@ -21,6 +27,13 @@ body {
   margin: 0;
 }
 
+p,
+label,
+button,
+input {
+  font-size: 17px;
+}
+
 button {
   color: var(--colour-font-light);
   border: none;
@@ -37,7 +50,7 @@ button:hover {
 }
 
 .progress-bar {
-  height: 5px;
+  height: 3px;
   left: 0;
   background-color: var(--colour-independence);
   transition: all 0.5s;
@@ -45,18 +58,21 @@ button:hover {
 }
 
 h1 {
-  font-size: 3rem;
+  font-size: 2rem;
   text-align: center;
   color: var(--colour-font-dark);
 }
 
-.start-modal {
+.start-modal,
+.modal-submit-names,
+.game-section {
   width: 60vw;
   margin: auto;
   padding: 2rem;
 }
 
-.start-modal h2 {
+.start-modal h2,
+.modal-submit-names h2 {
   margin-bottom: 4rem;
 }
 
@@ -73,8 +89,14 @@ h1 {
   font-size: 2rem;
 }
 
-.start-modal button {
+.start-modal button,
+.modal-submit-names-button,
+.modal-submit-names-button-previous {
   margin-top: 4rem;
+}
+
+.modal-submit-names-button-previous {
+  margin-left: 1rem;
 }
 
 .start-modal-inner {
@@ -94,13 +116,26 @@ h1 {
 }
 
 /* Names modal */
-button.go-back {
+button.secondary {
   background-color: #dee2e6;
   color: var(--colour-font-dark);
 } 
 
-button.go-back:hover {
+button.secondary:hover {
   background-color: #ced4da;
+}
+
+input {
+  border: none;
+  box-shadow: 0 0 1.5rem 0 #e5e5e5;
+  padding: 1rem;
+  width: 100%;
+  margin-bottom: 2rem;
+  margin-top: 1rem;
+} 
+
+input:disabled {
+  cursor: not-allowed;
 }
 
 .selected {
@@ -122,28 +157,32 @@ button.go-back:hover {
   border-radius: 0.5rem;
   width: 20vw;
   margin-left: 40vw;
-  transform: translateY(150px);
   transition: all 0.25s;
-}
-
-.active {
-  transform: translateY(-100px);
 }
 
 /* Game styling */
 
-.player-score * {
-  list-style: none;
+.player-score-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+span.score-section {
+  box-shadow: 0 0 1.5rem 0 #e5e5e5;
+  padding: 0rem 1rem;
+  margin-left: 1rem;
+  margin-right: 1rem;
+  font-weight: bold;
 }
 
 .game-container {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   width: 400px;
   margin: 50px auto;
-  background-color: #fff;
 }
 
 .cell {
@@ -190,4 +229,25 @@ button.go-back:hover {
 
 .fa-circle-o {
   color: var(--colour-rose-dust);
+}
+
+.play-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.play-buttons * {
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
+
+.winner {
+  background-color: var(--winning-background);
+  color: var(--winning-text);
+}
+
+.draw {
+  background-color: var(--draw-background);
+  color: var(--draw-text);
 }

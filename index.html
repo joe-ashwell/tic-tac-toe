@@ -11,7 +11,7 @@
 <body>
   <h1>Tic Tac Toe</h1>
   <div class="progress-bar"></div>
-  <p class="player-message-block"></p>
+  <p class="player-message-block hide"></p>
 
   <!-- Start modal -->
   <div class="start-modal">
@@ -47,22 +47,22 @@
   <!-- Capture name modal -->
   <div class="modal-submit-names hide">
 
+    <h2>2. Who's playing?</h2>
+
     <form>
-      <label for="Player-1">Player 1:</label><br>
-      <input class="player-one" type="text" id="Player-1" name="Player-1"><br>
-      <label for="Player-2">Player 2:</label><br>
-      <input class="player-two" type="text" id="Player-2" name="Player-2"><br>
+      <label id="p1" for="Player-1">Player 1</label><br>
+      <input class="player-one" type="text" id="Player-1" name="Player-1" placeholder="Joe"><br>
+      <label id="p2" for="Player-2">Player 2</label><br>
+      <input class="player-two" type="text" id="Player-2" name="Player-2" placeholder="Barry"><br>
     </form>
 
     <button class="modal-submit-names-button">Play</button>
-    <button class="modal-submit-names-button-previous go-back">Back</button>
+    <button class="modal-submit-names-button-previous secondary">Back</button>
 
   </div>
 
   <!-- Game layout -->
   <section class="game-section hide">
-
-    <h3>Some content</h3>
 
     <div class="player-score-section"></div>
 
@@ -80,8 +80,10 @@
 
     </div>
 
-    <button class="play-again">Play again</button>
-    <button class="reset-button">Reset</button>
+    <span class="play-buttons">
+      <button class="play-again secondary">Play again</button>
+      <button class="reset-button secondary">Reset</button>
+    </span>
 
   </section>
 

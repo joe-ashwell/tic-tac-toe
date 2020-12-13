@@ -17,6 +17,7 @@ const submitNamesModalButton = document.querySelector('.modal-submit-names-butto
 const goBack = document.querySelector('.modal-submit-names-button-previous');
 const playerOneNameInput = document.querySelector('.player-one');
 const playerTwoNameInput = document.querySelector('.player-two');
+const playerTwoLabel = document.querySelector('label#p2');
 let playerOneName;
 let playerTwoName;
 
@@ -55,7 +56,7 @@ function playerModeChoice() {
 
   this.classList.add('selected');
   playerMessageBlock.innerHTML = CLEAR_MESSAGE;
-  playerMessageBlock.classList.remove('active');
+  playerMessageBlock.classList.add('hide');
   progressBar.style.width = `33vw`;
 
   if (this === oneGameModeChoice) {
@@ -72,7 +73,7 @@ function playerModeChoice() {
 function openPlayerNamesModal() {
 
   if (gameModeChoice !== 1 && gameModeChoice !== 2) {
-    playerMessageBlock.classList.add('active');
+    playerMessageBlock.classList.remove('hide');
     playerMessageBlock.innerHTML = `Please select a player mode.`;
   } else {
     startModal.classList.add('hide');
@@ -80,6 +81,9 @@ function openPlayerNamesModal() {
     progressBar.style.width = `66vw`;
     if (gameModeChoice === 1) {
       playerTwoNameInput.disabled = true;
+      playerTwoLabel.textContent = `You've chosen to player the computer, let's call it Barry.`;
+    } else {
+      playerTwoLabel.textContent = `Player 2`;
     }
   }
 
@@ -94,17 +98,17 @@ function submitPlayerNames() {
 
   if (gameModeChoice === 1 && !playerOneName) {
     playerMessageBlock.innerHTML = `Please enter a name.`;
-    playerMessageBlock.classList.add('active');
+    playerMessageBlock.classList.remove('hide');
 
   } else if (gameModeChoice === 2 && !playerTwoName || !playerOneName) {
     playerMessageBlock.innerHTML = `Please enter a name.`;
-    playerMessageBlock.classList.add('active');
+    playerMessageBlock.classList.remove('hide');
 
   } else {
     submitNamesModal.classList.add('hide');
     gameSection.classList.remove('hide');
     playerMessageBlock.innerHTML = CLEAR_MESSAGE;
-    playerMessageBlock.classList.remove('active');
+    playerMessageBlock.classList.add('hide');
     progressBar.style.width = `100vw`;
   }
 
@@ -115,6 +119,7 @@ function submitPlayerNames() {
 function goBackToGameModeChoice() {
 
   submitNamesModal.classList.add('hide');
+  playerMessageBlock.classList.add('hide');
   resetSettings();
 
 }
@@ -194,7 +199,7 @@ function setPlayerScore() {
 
   playerScoreSection.innerHTML = `
 
-  <p>${playerOneName}</p> <p>${playerOneScore} - ${playerTwoScore}</p> <p>${playerTwoName || `Computer`}</p>
+  <h3>${playerOneName}</h3> <span class="score-section"><h3>${playerOneScore} - ${playerTwoScore}</h3></span> <h3>${playerTwoName || `Barry`}</h3>
   
   `;
 
@@ -211,12 +216,13 @@ function scoresOnTheDoors() {
       playerTwoWins === false
 
     ) {
-      console.log('Player one, won.')
       playerOneWins = true;
       playerOneScore += 1;
       setPlayerScore();
-      console.log(`player one wins: ${playerOneWins}`);
       gameOver = true;
+      playerMessageBlock.classList.remove('hide');
+      playerMessageBlock.classList.add('winner');
+      playerMessageBlock.innerHTML = `Awesome! ${playerOneName} won!`;
     } 
     
     else if (
@@ -226,12 +232,13 @@ function scoresOnTheDoors() {
       playerOneWins === false
 
     ) {
-      console.log('Player two, won.')
       playerTwoWins = true;
       playerTwoScore += 1;
       setPlayerScore();
-      console.log(`player two wins: ${playerTwoWins}`);
       gameOver = true;
+      playerMessageBlock.classList.remove('hide');
+      playerMessageBlock.classList.add('winner');
+      playerMessageBlock.innerHTML = `Awesome! ${playerTwoName} won!`;
     }
     
     else if (
@@ -239,8 +246,10 @@ function scoresOnTheDoors() {
       playerTwoWins === false &&
       playerOneGameLog.length + playerTwoGameLog.length === gameCells.length
     ) {
-      console.log(`it's a draw`);
       gameOver = true;
+      playerMessageBlock.classList.remove('hide');
+      playerMessageBlock.classList.add('draw');
+      playerMessageBlock.innerHTML = `Good effort! ${playerOneName} and ${playerTwoName} drew!`;
     }
 
     else {
@@ -250,6 +259,10 @@ function scoresOnTheDoors() {
     }
     
   })
+
+  if (gameOver === true) {
+    playAgainButton.classList.remove('secondary');
+  }
 
 }
 
@@ -267,8 +280,10 @@ function playAgain() {
   gameOver = false;
   playerOneWins = false;
   playerTwoWins = false;
-
+  playAgainButton.classList.add('secondary');
   gameCells.forEach(cell => cell.innerHTML = CLEAR_MESSAGE);
+  playerMessageBlock.classList.add('hide');
+  playerMessageBlock.classList.remove('winner', 'draw');
 
 }
 
