@@ -81,7 +81,7 @@ function openPlayerNamesModal() {
     progressBar.style.width = `66vw`;
     if (gameModeChoice === 1) {
       playerTwoNameInput.disabled = true;
-      playerTwoLabel.textContent = `You've chosen to player the computer, let's call it Barry.`;
+      playerTwoLabel.textContent = `You've chosen to play the computer, let's call it Barry.`;
     } else {
       playerTwoLabel.textContent = `Player 2`;
     }
