@@ -23,8 +23,11 @@
   font-family: 'Oxygen', sans-serif;
 }
 
-body {
+body,
+html {
   margin: 0;
+  padding: 0;
+  overflow-x: hidden;
 }
 
 p,
@@ -79,6 +82,7 @@ h1 {
 .start-modal p {
   color: #6c757d;
   margin-top: 5px;
+  text-align: center;
 }
 
 .start-modal h4 {
@@ -103,6 +107,7 @@ h1 {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  flex-wrap: wrap;
 }
 
 .start-modal-item {
@@ -154,10 +159,9 @@ input:disabled {
   color: var(--warning-text);
   background-color: var(--warning-background);
   padding: 1rem;
-  border-radius: 0.5rem;
   width: 20vw;
   margin-left: 40vw;
-  transition: all 0.25s;
+  transition: all 1.25s;
 }
 
 /* Game styling */
@@ -235,6 +239,7 @@ span.score-section {
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-wrap: wrap;
 }
 
 .play-buttons * {
@@ -250,4 +255,66 @@ span.score-section {
 .draw {
   background-color: var(--draw-background);
   color: var(--draw-text);
+}
+
+@media only screen and (max-width: 1000px) {
+
+  .start-modal,
+  .modal-submit-names,
+  .game-section {
+    width: 80vw;
+    padding: 0;
+  }
+
+  .start-modal-inner {
+    justify-content: space-evenly;
+  }
+
+  .start-modal-item {
+    padding: 3rem;
+    width: 60vw;
+    margin: 0;
+  }
+
+  .start-modal-button {
+    margin-bottom: 3rem;
+  }
+
+  input {
+    width: calc(80vw - 2rem);
+  }
+
+  .player-score-section {
+    margin-top: 3rem;
+  }
+
+  .game-container {
+    margin-left: -50px;
+  }
+
+  .player-message-block {
+    width: 70vw;
+    margin-left: 10vw;
+    margin-bottom: 85vh;
+  }
+
+}
+
+@media only screen and (max-width: 767px) {
+
+  .start-modal {
+    width: 90vw;
+  }
+
+  .start-modal-inner {
+    justify-content: center;
+  }
+
+  button.play-again,
+  button.reset-button {
+    width: 70vw;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+  }
+
 }
